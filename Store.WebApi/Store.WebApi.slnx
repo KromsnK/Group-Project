@@ -1,6 +1,7 @@
 <Solution>
   <Project Path="../Store.Business/Store.Business.csproj" />
   <Project Path="../Store.Data/Store.Data.csproj" />
+  <Project Path="../Store.Tests/Store.Tests.csproj" Id="638fc12f-4137-454b-83d5-fc632682302d" />
   <Project Path="../Store.WebApp/Store.WebApp.csproj" />
   <Project Path="Store.WebApi.csproj" />
 </Solution>
