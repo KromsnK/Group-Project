@@ -22,6 +22,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Store.Business\Store.Business.csproj" />
     <ProjectReference Include="..\Store.Data\Store.Data.csproj" />
+    <ProjectReference Include="..\Store.WebApi\Store.WebApi.csproj" />
+    <ProjectReference Include="..\Store.WebApp\Store.WebApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
