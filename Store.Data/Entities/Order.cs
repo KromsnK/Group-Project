@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Store.Data.Entities
 {
     public class Order : BaseEntity
@@ -8,6 +10,7 @@ namespace Store.Data.Entities
 
         public int UserId { get; set; }
 
+        [Precision(18, 2)]
         public decimal TotalAmount { get; set; }
 
         public string CustomerName { get; set; } = string.Empty;
