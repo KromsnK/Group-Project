@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Store.Data.Entities
 {
     public class Order : BaseEntity
@@ -7,6 +9,9 @@ namespace Store.Data.Entities
         public string OrderStatus { get; set; } = "Pending"; // Default status is "Pending"
 
         public int UserId { get; set; }
+
+        [Precision(18, 2)]
+        public decimal TotalAmount { get; set; }
 
         public string CustomerName { get; set; } = string.Empty;
 
