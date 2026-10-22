@@ -108,6 +108,28 @@ namespace Store.Business.Services
             });
         }
 
+        public async Task<OrderDto> UpdateOrderStatusAsync(int orderId, string newStatus)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null) throw new KeyNotFoundException("Замовлення не знайдено.");
+
+            var validStatuses = new[] { "Created", "Confirmed", "Shipped", "Completed", "Cancelled" };
+            if (!validStatuses.Contains(newStatus)) throw new ArgumentException("Невалідний статус.");
+
+            order.Status = newStatus;
+            _context.Orders.Update(order);
+            await _context.SaveChangesAsync();
+
+            return new OrderDto
+            {
+                Id = order.Id,
+                UserId = order.UserId ?? 0, // Якщо UserId nullable (для гостей)
+                CreatedAt = order.CreatedAt,
+                Status = order.Status,
+                TotalAmount = order.TotalAmount
+            };
+        }
+
         public async Task<OrderDto?> GetOrderByIdAsync(int id, int userId)
         {
             var order = await this._orderRepository.GetByIdAsync(id);
