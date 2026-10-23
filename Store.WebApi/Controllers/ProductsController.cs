@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Store.Business.DTO;
 using Store.Business.Interfaces;
 
@@ -33,6 +34,7 @@ namespace Store.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] ProductCreateDto dto)
         {
             var product = await _productService.CreateAsync(dto);
@@ -40,6 +42,7 @@ namespace Store.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(int id, [FromBody] ProductUpdateDto dto)
         {
             if (id != dto.Id)
@@ -50,6 +53,7 @@ namespace Store.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var product = await _productService.GetByIdAsync(id);
