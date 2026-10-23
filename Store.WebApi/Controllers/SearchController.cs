@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Store.Data;
+using Store.Data.Context;
 using Store.Data.Entities;
 using System.Security.Claims;
 using System.Threading.Tasks;

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Store.Business.DTO;
 using Store.Business.Interfaces;
-using Store.Data;
+using Store.Data.Context;
 using Store.Data.Entities;
 
 namespace Store.Business.Services

@@ -96,7 +96,7 @@ namespace Store.Business.Services
 
         public async Task<IEnumerable<OrderDto>> GetUserOrdersAsync(int userId)
         {
-            var orders = await _orderRepository.FindAsync(o => o.UserId == userId);
+            var orders = await this._orderRepository.FindAsync(o => o.UserId == userId);
 
             return orders.Select(o => new OrderDto
             {
@@ -110,22 +110,30 @@ namespace Store.Business.Services
 
         public async Task<OrderDto> UpdateOrderStatusAsync(int orderId, string newStatus)
         {
-            var order = await _context.Orders.FindAsync(orderId);
-            if (order == null) throw new KeyNotFoundException("Замовлення не знайдено.");
+            var order = await this._orderRepository.GetByIdAsync(orderId);
+
+            if (order == null)
+            {
+                throw new KeyNotFoundException("Замовлення не знайдено.");
+            }
 
             var validStatuses = new[] { "Created", "Confirmed", "Shipped", "Completed", "Cancelled" };
-            if (!validStatuses.Contains(newStatus)) throw new ArgumentException("Невалідний статус.");
+            if (!validStatuses.Contains(newStatus))
+            {
+                throw new ArgumentException("Невалідний статус.");
+            }
 
-            order.Status = newStatus;
-            _context.Orders.Update(order);
-            await _context.SaveChangesAsync();
+            order.OrderStatus = newStatus;
+
+            this._orderRepository.Update(order);
+            await this._orderRepository.SaveChangesAsync();
 
             return new OrderDto
             {
                 Id = order.Id,
-                UserId = order.UserId ?? 0, // Якщо UserId nullable (для гостей)
-                CreatedAt = order.CreatedAt,
-                Status = order.Status,
+                UserId = order.UserId,
+                OrderDate = order.OrderDate,
+                Status = order.OrderStatus,
                 TotalAmount = order.TotalAmount
             };
         }
